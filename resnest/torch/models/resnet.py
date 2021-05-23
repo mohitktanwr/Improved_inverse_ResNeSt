@@ -173,7 +173,7 @@ class ResNet(nn.Module):
         self.cardinality = groups
         self.bottleneck_width = bottleneck_width
         # ResNet-D params
-        self.inplanes = stem_width*2 if deep_stem else 512
+        self.inplanes = 512 if deep_stem else 64  #stem_width*2 if deep_stem else 512
         self.avg_down = avg_down
         self.last_gamma = last_gamma
         # ResNeSt params
