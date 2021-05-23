@@ -173,7 +173,7 @@ class ResNet(nn.Module):
         self.cardinality = groups
         self.bottleneck_width = bottleneck_width
         # ResNet-D params
-        self.inplanes = 512 if deep_stem else 64  #stem_width*2 if deep_stem else 512
+        self.inplanes = 256 if deep_stem else 64  #stem_width*2 if deep_stem else 512
         self.avg_down = avg_down
         self.last_gamma = last_gamma
         # ResNeSt params
@@ -206,8 +206,8 @@ class ResNet(nn.Module):
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.layer1 = self._make_layer(block, 1024, layers[0], norm_layer=norm_layer, is_first=False)
-        self.layer2 = self._make_layer(block, 512, layers[1], stride=2, norm_layer=norm_layer)
+        self.layer1 = self._make_layer(block, 512, layers[0], norm_layer=norm_layer, is_first=False)
+        self.layer2 = self._make_layer(block, 256, layers[1], stride=2, norm_layer=norm_layer)
         if dilated or dilation == 4:
             self.layer3 = self._make_layer(block, 256, layers[2], stride=1,
                                            dilation=2, norm_layer=norm_layer,
@@ -226,7 +226,7 @@ class ResNet(nn.Module):
             self.layer3 = self._make_layer(block, 256, layers[2], stride=2, #check
                                            norm_layer=norm_layer,
                                            dropblock_prob=dropblock_prob)
-            self.layer4 = self._make_layer(block, 256, layers[3], stride=2,
+            self.layer4 = self._make_layer(block, 128, layers[3], stride=2,
                                            norm_layer=norm_layer,
                                            dropblock_prob=dropblock_prob)
         self.avgpool = GlobalAvgPool2d()
