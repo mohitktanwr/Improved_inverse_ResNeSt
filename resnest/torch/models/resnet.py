@@ -173,7 +173,7 @@ class ResNet(nn.Module):
         self.cardinality = groups
         self.bottleneck_width = bottleneck_width
         # ResNet-D params
-        self.inplanes = 256 if deep_stem else 64  #stem_width*2 if deep_stem else 512
+        self.inplanes = 128 if deep_stem else 64 #256 #stem_width*2 if deep_stem else 512
         self.avg_down = avg_down
         self.last_gamma = last_gamma
         # ResNeSt params
@@ -195,10 +195,10 @@ class ResNet(nn.Module):
                 conv_layer(3, stem_width, kernel_size=3, stride=2, padding=1, bias=False, **conv_kwargs),
                 norm_layer(stem_width),
                 nn.ReLU(inplace=True),
-                conv_layer(stem_width, stem_width, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
+                conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
                 norm_layer(stem_width),
                 nn.ReLU(inplace=True),
-                conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
+                conv_layer(stem_width*2, stem_width*4, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
             )
         else:
             self.conv1 = conv_layer(3, 64, kernel_size=7, stride=2, padding=3,
