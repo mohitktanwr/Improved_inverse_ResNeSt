@@ -196,7 +196,7 @@ class ResNet(nn.Module):
                 norm_layer(stem_width),
                 nn.ReLU(inplace=True),
                 conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
-                norm_layer(stem_width),
+                norm_layer(stem_width*2),
                 nn.ReLU(inplace=True),
                 conv_layer(stem_width*2, stem_width*4, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
             )
